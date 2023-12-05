@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+// use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,3 +38,10 @@ Route::get('/', function () {
 //  })->whereIn('category',['laptop','pc','phone']);
 // });
 // 
+Route::get('login',function(){
+ return view('login');
+});
+Route::post('logged',[UserController::class,'validateform']
+)->name('logged');
+// Route::post('control',[UserController::class,'showform']);
+// Route::get('control',[ExampleController::class,'show']);
