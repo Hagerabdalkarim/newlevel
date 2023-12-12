@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\ExampleController;
-use App\Http\Controllers\UserController;
+// use App\Http\Controllers\UserController;
+// use App\Http\Controllers\CarController;
+use App\Http\Controllers\PostsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,10 +40,17 @@ Route::get('/', function () {
 //  })->whereIn('category',['laptop','pc','phone']);
 // });
 // 
-Route::get('login',function(){
- return view('login');
-});
-Route::post('logged',[UserController::class,'validateform']
-)->name('logged');
+// Route::get('login',function(){
+//  return view('login');
+// });
+// Route::post('logged',[UserController::class,'validateform']
+// )->name('logged');
 // Route::post('control',[UserController::class,'showform']);
 // Route::get('control',[ExampleController::class,'show']);
+// Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
+// Route::get('createCar',[CarController::class,'create'])->name('createCar');
+// Route::get('cars',[CarController::class,'index']);
+
+Route::get('posts',[PostsController::class,'index']);
+Route::post('storepost',[PostsController::class,'store'])->name('storepost');
+Route::get('createpost',[PostsController::class,'create'])->name('createpost');
