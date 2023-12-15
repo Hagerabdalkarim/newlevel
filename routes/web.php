@@ -39,7 +39,7 @@ Route::get('/', function () {
 //     return 'The category is ' . $cat;
 //  })->whereIn('category',['laptop','pc','phone']);
 // });
-// 
+//
 // Route::get('login',function(){
 //  return view('login');
 // });
@@ -49,8 +49,12 @@ Route::get('/', function () {
 // Route::get('control',[ExampleController::class,'show']);
 // Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
 // Route::get('createCar',[CarController::class,'create'])->name('createCar');
-// Route::get('cars',[CarController::class,'index']);
-
-Route::get('posts',[PostsController::class,'index']);
+// Route::get('cars',[CarController::class,'index'])->name('cars');
+// Route::get('updateCar/{id}',[CarController::class,'edit'])->name('updateCar');
+// Route::put('update/{id}',[CarController::class,'update'])->name('update');
+// Route::get('showCar/{id}',[CarController::class,'show'])->name('showCar');
+Route::get('posts',[PostsController::class,'index'])->name('posts');
 Route::post('storepost',[PostsController::class,'store'])->name('storepost');
 Route::get('createpost',[PostsController::class,'create'])->name('createpost');
+Route::put('update/{id}',[PostsController::class,'update'])->name('update');
+Route::get('editPost/{id}',[PostsController::class,'edit'])->name('editPost');

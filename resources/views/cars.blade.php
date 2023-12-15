@@ -18,6 +18,8 @@
         <th>Title</th>
         <th>Description</th>
         <th>Published</th>
+        <th>Update</th>
+        <th>Show</th>
       </tr>
     </thead>
     <tbody>
@@ -31,6 +33,8 @@
           No
           @endif
           </td>
+          <td><a href="updateCar/{{ $car->id }}">Edit</a></td>
+           <td><a href="showCar/{{ $car->id }}">Show</a></td>
       </tr>
      @endforeach
     </tbody>

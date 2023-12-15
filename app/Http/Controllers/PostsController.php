@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\post;
+
 class PostsController extends Controller
+
 {
-    //
-}
-class CarController extends Controller
-{
+    private $columns = ['posttitle','author','description','published'];
     /**
      * Display a listing of the resource.
      */
@@ -34,17 +33,21 @@ class CarController extends Controller
     public function store(Request $request)
     {
        
-     $posts = new post();
-     $posts->posttitle = $request->posttitle;
-      $posts->author = $request->author;
-     $posts->description = $request->description;
-     if(isset($request->published)){
-        $posts->published = 1;
-     }else{
-        $posts->published = 0;
-     }
-     $posts->save();
-     return 'Data added successfully';
+    //  $posts = new post();
+    //  $posts->posttitle = $request->posttitle;
+    //   $posts->author = $request->author;
+    //  $posts->description = $request->description;
+    //  if(isset($request->published)){
+    //     $posts->published = 1;
+    //  }else{
+    //     $posts->published = 0;
+    //  }
+    //  $posts->save();
+    //  return 'Data added successfully';
+    $data = $request->only($this->columns);
+    $data['published'] = isset($request->published);
+    Post::create($data);
+    return redirect('posts');
     }
 
     /**
@@ -60,7 +63,8 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post= post::findOrFail($id);
+        return view('updatepost',compact('post'));
     }
 
     /**
@@ -68,7 +72,10 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+    $data = $request->only($this->columns);
+    $data['published'] = isset($request->published);
+    Post::where('id',$id)->update($data);
+    return redirect('posts');
     }
 
     /**
