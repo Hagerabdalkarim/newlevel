@@ -47,14 +47,21 @@ Route::get('/', function () {
 // )->name('logged');
 // Route::post('control',[UserController::class,'showform']);
 // Route::get('control',[ExampleController::class,'show']);
+Route::get('posts',[PostsController::class,'index'])->name('posts');
+Route::post('storepost',[PostsController::class,'store'])->name('storepost');
+Route::get('createpost',[PostsController::class,'create'])->name('createpost');
+Route::put('update/{id}',[PostsController::class,'update'])->name('update');
+Route::get('editPost/{id}',[PostsController::class,'edit'])->name('editPost');
+Route::get('deletePost/{id}',[PostsController::class,'destroy']);
+Route::get('trashedPost',[PostsController::class,'trashed'])->name('trashedPost');
+Route::get('forceDeletePost/{id}',[PostsController::class,'destroy'])->name('forceDeletePost');
+
 // Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
 // Route::get('createCar',[CarController::class,'create'])->name('createCar');
 // Route::get('cars',[CarController::class,'index'])->name('cars');
 // Route::get('updateCar/{id}',[CarController::class,'edit'])->name('updateCar');
 // Route::put('update/{id}',[CarController::class,'update'])->name('update');
 // Route::get('showCar/{id}',[CarController::class,'show'])->name('showCar');
-Route::get('posts',[PostsController::class,'index'])->name('posts');
-Route::post('storepost',[PostsController::class,'store'])->name('storepost');
-Route::get('createpost',[PostsController::class,'create'])->name('createpost');
-Route::put('update/{id}',[PostsController::class,'update'])->name('update');
-Route::get('editPost/{id}',[PostsController::class,'edit'])->name('editPost');
+// Route::get('deleteCar/{id}',[CarController::class,'destroy']);
+// Route::get('trashedCar',[PostsController::class,'trashed'])->name('trashedCar');
+// Route::get('forceDeleteCar/{id}',[CarsController::class,'destroy'])->name('forceDeleteCar');

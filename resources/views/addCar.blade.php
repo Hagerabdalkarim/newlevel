@@ -16,11 +16,17 @@
     @csrf
     <div class="mb-3">
       <label for="title"class="form-label">Title:</label>
-      <input class="form-control"type="text" class="form-control" id="title"  name="title">
+      <input class="form-control"type="text" class="form-control" id="title"  name="title" value="{{ old('title')}}">
+      @error('title')
+      {{ $message }}
+      @enderror
     </div>
     <div class="mb-3">
       <label for="description"class="form-label">Description:</label>
-      <textarea class="form-control"name="description" id="description" rows="3"></textarea>
+      <textarea class="form-control"name="description" id="description" rows="3">{{ old('description')}}</textarea>
+      @error('description')
+      {{ $message }}
+      @enderror
     </div>
     <div class="checkbox">
       <label><input class="form-check-input" type="checkbox" name="published"> Published me</label>

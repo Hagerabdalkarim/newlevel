@@ -18,15 +18,24 @@
     @csrf
     <div class="form-group">
       <label for="posttitle">Post Title:</label>
-      <input type="text" class="form-control" id="posttitle" placeholder="Enter posttitle" name="posttitle">
+      <input type="text" class="form-control" id="posttitle" placeholder="Enter posttitle" name="posttitle"value="{{ old('posttitle')}}">
+       @error('posttitle')
+      {{ $message }}
+      @enderror
     </div>
     <div class="form-group">
       <label for="author">Author:</label>
-      <input type="text" class="form-control" id="author" placeholder="Enter Author" name="author">
+      <input type="text" class="form-control" id="author" placeholder="Enter Author" name="author"value="{{ old('author')}}">
+       @error('author')
+      {{ $message }}
+      @enderror
     </div>
     <div class="form-group">
       <label for="description">Description:</label>
-      <textarea class="form-control"name="description" id="description" cols="60" rows="3"></textarea>
+      <textarea class="form-control"name="description" id="description" cols="60" rows="3">{{ old('description') }}</textarea>
+       @error('description')
+      {{ $message }}
+      @enderror
     </div>
     <div class="form-group form-check">
       <label class="form-check-label">

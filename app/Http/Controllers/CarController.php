@@ -45,10 +45,19 @@ class CarController extends Controller
     //  $cars->save();
     //  return 'Data added successfully';
     //  return $request;
-    $data = $request->only($this->columns);
-    $data['published'] = isset($request->published);
-    Car::create($data);
-    return redirect('cars');
+    //
+    // $data = $request->only($this->columns);
+    // $data['published'] = isset($request->published);
+    // Car::create($data);
+    // return redirect('cars');
+       $data = $request->validate([
+             'title'=>'required|string|max:50',
+             'description'=> 'required|string',
+            ]);
+            
+        $data['published'] = isset($request->published);
+        Car::create($data);
+        return redirect('cars');
     }
 
     /**
@@ -85,8 +94,22 @@ class CarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // softdelete -> deleting from blade file or view but find data in database
     public function destroy(string $id)
     {
-        //
+     Car::where('id',$id)->delete();
+     return redirect('cars');
+    }
+    // view list delete
+    public function trashed()
+    {
+        $cars = Car::onlyTrashed()->get();
+     return view('trashedCar',compact('cars'));
+    }
+    // focedelete-> deleting from Database
+     public function forceDelete(string $id)
+    {
+     Car::where('id',$id)->forceDelete();
+     return redirect('cars');
     }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Posts</title>
+  <title>Trashed List Posts</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -11,7 +11,7 @@
 <body>
 @include('includes.nav')
 <div class="container">
-  <h2>List Posts</h2>
+  <h2>Trashed List Posts</h2>
   <table class="table">
     <thead>
       <tr>
@@ -19,7 +19,6 @@
         <th>Author</th>
         <th>Descripion</th>
         <th>Published</th> 
-        <th>Update</th>
         <th>Delete</th>
       </tr>
     </thead>
@@ -35,8 +34,7 @@
           No
           @endif 
         </td>
-        <td><a href="editPost/{{ $post->id }}">Edit</a></td>
-        <td><a href="deletePost/{{ $post->id }}">Delete</a></td>
+        <td><a href="forceDeletePost/{{ $post->id }}" onclick="return confirm('Are you sure you want to delete ?')">Force Delete</a></td>
       </tr>      
       @endforeach
     </tbody>

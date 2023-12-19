@@ -44,10 +44,20 @@ class PostsController extends Controller
     //  }
     //  $posts->save();
     //  return 'Data added successfully';
-    $data = $request->only($this->columns);
-    $data['published'] = isset($request->published);
-    Post::create($data);
-    return redirect('posts');
+    //
+    // $data = $request->only($this->columns);
+    // $data['published'] = isset($request->published);
+    // Post::create($data);
+    // return redirect('posts');
+      $data = $request->validate([
+             'posttitle'=>'required|string|max:50',
+             'author'=>'required|string|max:50',
+             'description'=> 'required|string',
+            ]);
+            
+        $data['published'] = isset($request->published);
+        Post::create($data);
+        return redirect('posts');
     }
 
     /**
@@ -83,6 +93,18 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+     Post::where('id',$id)->delete();
+     return redirect('posts');
+    }
+    public function trashed()
+    {
+     $posts = Post::onlyTrashed()->get();
+     return view('trashedPost', compact('posts'));
+    
+    }
+     public function forceDelete(string $id)
+    {
+     Post::where('id',$id)->forceDelete();
+     return redirect('posts');
     }
 }
