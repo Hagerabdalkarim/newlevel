@@ -13,6 +13,7 @@ class post extends Model
         'posttitle',
         'author',
         'description',
+          'image',
         'published'
     ];
 

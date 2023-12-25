@@ -56,6 +56,10 @@ Route::get('deletePost/{id}',[PostsController::class,'destroy']);
 Route::get('trashedPost',[PostsController::class,'trashed'])->name('trashedPost');
 Route::get('forceDeletePost/{id}',[PostsController::class,'destroy'])->name('forceDeletePost');
 
+// Route::get('photo',function(){
+//     return view('view');
+// });
+
 // Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
 // Route::get('createCar',[CarController::class,'create'])->name('createCar');
 // Route::get('cars',[CarController::class,'index'])->name('cars');

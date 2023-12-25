@@ -14,7 +14,7 @@
 @include('includes.nav')
 <div class="container">
   <h2>Add Post</h2>
-  <form action="{{route('storepost')}}" method="post">
+  <form action="{{route('storepost')}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
       <label for="posttitle">Post Title:</label>
@@ -36,6 +36,13 @@
        @error('description')
       {{ $message }}
       @enderror
+      <div class="form-group">
+      <label for="image">Image:</label>
+      <input type="file" class="form-control" id="image" placeholder="Enter image" name="image">
+      @error('image')
+        {{ $message }}
+      @enderror
+    </div>
     </div>
     <div class="form-group form-check">
       <label class="form-check-label">

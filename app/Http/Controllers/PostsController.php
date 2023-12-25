@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\post;
+use App\Traits\Common;
+// use app\Http\Requests\StorePostRequest;
 
 class PostsController extends Controller
 
 {
+    use Common;
+
     private $columns = ['posttitle','author','description','published'];
     /**
      * Display a listing of the resource.
@@ -31,8 +35,7 @@ class PostsController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-       
+    { 
     //  $posts = new post();
     //  $posts->posttitle = $request->posttitle;
     //   $posts->author = $request->author;
@@ -49,16 +52,22 @@ class PostsController extends Controller
     // $data['published'] = isset($request->published);
     // Post::create($data);
     // return redirect('posts');
+    //
+    $messages = $this->messages();
       $data = $request->validate([
              'posttitle'=>'required|string|max:50',
              'author'=>'required|string|max:50',
              'description'=> 'required|string',
-            ]);
-            
-        $data['published'] = isset($request->published);
-        Post::create($data);
-        return redirect('posts');
-    }
+             'image'=>'required|mimes:png,jpg,jpeg|max:2048',
+            ], $messages);
+             $file_namepost = $this->uploadFile($request->image, 'assets/images');  
+               $data['image'] = $file_namepost; 
+              $data['published'] = isset($request->published);
+             Post::create($data);
+            return redirect('posts');
+            }
+      
+    
 
     /**
      * Display the specified resource.
@@ -82,12 +91,29 @@ class PostsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-    $data = $request->only($this->columns);
-    $data['published'] = isset($request->published);
-    Post::where('id',$id)->update($data);
-    return redirect('posts');
-    }
+    // $data = $request->only($this->columns);
+    // $data['published'] = isset($request->published);
+    // Post::where('id',$id)->update($data);
+    // return redirect('posts');
+      $messages = $this->messages();
+      $data = $request->validate([
+             'posttitle'=>'required|string|max:50',
+             'author'=>'required|string|max:50',
+             'description'=> 'required|string',
+             'image'=>'sometimes||mimes:png,jpg,jpeg|max:2048',
+            ], $messages);
 
+            if($request->hasFile('image')){
+             $file_namepost = $this->uploadFile($request->image, 'assets/images');  
+             $data['image'] = $file_namepost; 
+             unlink("assets/images/".$request->oldImage);
+            }
+        $data['published'] = isset($request->published);
+        Post::where('id',$id)->update($data);
+        return redirect('posts');
+    }
+    
+    
     /**
      * Remove the specified resource from storage.
      */
@@ -106,5 +132,12 @@ class PostsController extends Controller
     {
      Post::where('id',$id)->forceDelete();
      return redirect('posts');
+    }
+    public function messages(){
+        return [
+            'posttitle.required'=>'Enter The Title',
+             'author.required'=>'Should be string',
+             'description.required'=> 'Should be text'
+        ];
     }
 }

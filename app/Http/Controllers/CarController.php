@@ -50,11 +50,14 @@ class CarController extends Controller
     // $data['published'] = isset($request->published);
     // Car::create($data);
     // return redirect('cars');
+    $messages = $this->messages();
        $data = $request->validate([
              'title'=>'required|string|max:50',
              'description'=> 'required|string',
-            ]);
-            
+            'image'=>'required||mimes:png,jpg,jpeg|max:2048',
+            ], $messages);
+        $file_namecar = $this->uploadFile($request->image, 'assets/images');    
+        $data['image'] = $file_namecar;  
         $data['published'] = isset($request->published);
         Car::create($data);
         return redirect('cars');
@@ -85,10 +88,26 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-     $data = $request->only($this->columns);
-    $data['published'] = isset($request->published);
-    Car::where('id',$id)->update($data);
-    return redirect('cars');
+    //  $data = $request->only($this->columns);
+    // $data['published'] = isset($request->published);
+    // Car::where('id',$id)->update($data);
+    // return redirect('cars');
+     $messages = $this->messages();
+      $data = $request->validate([
+             'posttitle'=>'required|string|max:50',
+             'author'=>'required|string|max:50',
+             'description'=> 'required|string',
+             'image'=>'sometimes||mimes:png,jpg,jpeg|max:2048',
+            ], $messages);
+
+            if($request->hasFile('image')){
+             $file_namecar = $this->uploadFile($request->image, 'assets/images');  
+             $data['image'] = $file_namecar; 
+             unlink("assets/images/".$request->oldImage);
+            }
+        $data['published'] = isset($request->published);
+        Car::where('id',$id)->update($data);
+        return redirect('cars');
     }
 
     /**
@@ -111,5 +130,15 @@ class CarController extends Controller
     {
      Car::where('id',$id)->forceDelete();
      return redirect('cars');
+    }
+    public function messages(){
+        return [
+            'title.required'=>'Enter The Title',
+            'title.string'=>'Should be string',
+             'description.string'=> 'Should be text',
+             'image.required'=> 'Please be sure to select an image',
+            'image.mimes'=> 'Incorrect image type',
+            'image.max'=> 'Max file size exceeded',
+        ];
     }
 }

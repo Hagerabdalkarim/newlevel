@@ -12,7 +12,7 @@
 @include('includes.nav')
 <div class="container">
   <h2>Add New Car Data</h2>
-  <form action="{{ route('storeCar') }}" method="post">
+  <form action="{{ route('storeCar') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
       <label for="title"class="form-label">Title:</label>
@@ -26,6 +26,13 @@
       <textarea class="form-control"name="description" id="description" rows="3">{{ old('description')}}</textarea>
       @error('description')
       {{ $message }}
+      @enderror
+    </div>
+    <div class="form-group">
+      <label for="image">Image:</label>
+      <input type="file" class="form-control" id="image" placeholder="Enter image" name="image">
+      @error('image')
+        {{ $message }}
       @enderror
     </div>
     <div class="checkbox">
