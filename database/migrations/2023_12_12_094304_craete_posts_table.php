@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('author', 100);
             $table->longText('description');
             $table->string('image', 100);
-            $table->boolean('published');
+            $table->boolean('published');        
             $table->softDeletes();
             $table->timestamps();
         });
