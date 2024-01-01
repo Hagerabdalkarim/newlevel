@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Category;
 
 class CarController extends Controller
 {
@@ -15,7 +16,8 @@ class CarController extends Controller
     public function index()
     {
      $cars= Car::get();
-     return view('cars',compact('cars'));
+      $category = Category::get();
+        return view('cars', compact('cars', 'category'));
     //  return view('cars');
     //table
     }
@@ -25,7 +27,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('addCar');
+        $categories= Category::get();
+        return view('addCar',compact('categories'));
     }
     //form
     /**
@@ -55,6 +58,7 @@ class CarController extends Controller
              'title'=>'required|string|max:50',
              'description'=> 'required|string',
             'image'=>'required||mimes:png,jpg,jpeg|max:2048',
+            'category_id'=>'required',
             ], $messages);
         $file_namecar = $this->uploadFile($request->image, 'assets/images');    
         $data['image'] = $file_namecar;  
@@ -69,7 +73,7 @@ class CarController extends Controller
     public function show(string $id)
     {
       
-        $car = Car::findOrFail($id);
+        $cars = Car::findOrFail($id);
       return view('showCar',compact('car'));
     }
 
@@ -79,8 +83,9 @@ class CarController extends Controller
 
     public function edit(string $id)
     {
-        $car = Car::findOrFail($id);
-        return view('updateCar', compact('car'));
+        $cars = Car::findOrFail($id);
+       $categories = Category::get();
+        return view('updateCar', compact('cars','categories'));
     }
 
     /**
@@ -98,6 +103,7 @@ class CarController extends Controller
              'author'=>'required|string|max:50',
              'description'=> 'required|string',
              'image'=>'sometimes||mimes:png,jpg,jpeg|max:2048',
+             'category_id'=>'required',
             ], $messages);
 
             if($request->hasFile('image')){
@@ -106,7 +112,8 @@ class CarController extends Controller
              unlink("assets/images/".$request->oldImage);
             }
         $data['published'] = isset($request->published);
-        Car::where('id',$id)->update($data);
+        Car::where('id', $id)->update($data);
+        // Category::where('id',$id)->update($data);
         return redirect('cars');
     }
 

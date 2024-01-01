@@ -17,26 +17,31 @@
       <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>category</th>
+        <th>Photo</th>
         <th>Published</th>
         <th>Update</th>
         <th>Show</th>
-        <th>Delete</th>
+        <th>Delete</th>   
       </tr>
     </thead>
     <tbody>
     @foreach($cars as $car)
       <tr>
-        <td>{{$car->title}}</td>
-        <td>{{$car->description}}</td>
-        <td> @if ($car->published)
+         <td>{{$car->title}}</td>
+         <td>{{$car->description}}</td>
+         <td>{{$car->category->cat_name}}</td>
+         <td>{{$car->image}}</td>
+         <td> @if ($car->published)
           Yes
           @else
           No
           @endif
           </td>
           <td><a href="updateCar/{{ $car->id }}">Edit</a></td>
-           <td><a href="showCar/{{ $car->id }}">Show</a></td>
-           <td><a href="deleteCar/{{ $car->id }}">Delete</a></td>
+          <td><a href="showCar/{{ $car->id }}">Show</a></td>
+          <td><a href="deleteCar/{{ $car->id }}">Delete</a></td>
+        
       </tr>
      @endforeach
     </tbody>

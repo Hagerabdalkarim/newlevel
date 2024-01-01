@@ -22,7 +22,7 @@ class CarFactory extends Factory
             'description'=>fake()->paragraph(),
             'image' => fake()->imageUrl(null, 360, 360, 'animals', true),
             'published'=>fake()->numberBetween(0,1),
-            'category_id'=>fake()->numberBetween(1,100),
+            'category_id'=>fake()->numberBetween(1,10),
             ];
     }
 }

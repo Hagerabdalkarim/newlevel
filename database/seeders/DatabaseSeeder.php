@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory(10)->create();
-        // Car::factory(20)->create();
-        
-       Car::factory(10)->each(Category::factory()->count(3)->create(['id' =>'category_id']));
+        Category::factory(20)->create();
+        Car::factory(20)->create();
+       
         //   Car::factory(10)->create();
         //   Category::factory(20)->create();
     }
