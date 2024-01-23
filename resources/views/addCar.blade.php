@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Add Car</title>
+  <title>{{ __('messages.title') }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -11,11 +11,11 @@
 <body>
 @include('includes.nav')
 <div class="container">
-  <h2>Add New Car Data</h2>
+  <h2>{{__('messages.newCarData')}}</h2>
   <form action="{{ route('storeCar') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
-      <label for="title"class="form-label">Title:</label>
+      <label for="title"class="form-label">{{__('messages.newCarData')}}</label>
       <input class="form-control"type="text" class="form-control" id="title"  name="title" value="{{ old('title')}}">
       @error('title')
       {{ $message }}

@@ -11,11 +11,6 @@ class category extends Model
      protected $data_cat = [
         'rang_prise',
         'cat_name',
-        'id',
-      //   'rang_price',
+      
      ];
-
-      public function car(){
-        return $this->hasMany(Car::class,'id');
-    }
   }

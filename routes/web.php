@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\ExampleController;
 // use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\HomeController;
 // use App\Http\Controllers\PostsController;
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +60,12 @@ Route::get('/', function () {
 // Route::get('photo',function(){
 //     return view('view');
 // });
-
-Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
-Route::get('createCar',[CarController::class,'create'])->name('createCar');
+Route::group(
+[
+	'prefix' => LaravelLocalization::setLocale(),
+	'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function(){ Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
+Route::get('createCar',[CarController::class,'create'])->middleware('verified')->name('createCar');
 Route::get('cars',[CarController::class,'index'])->name('cars');
 Route::get('updateCar/{id}',[CarController::class,'edit'])->name('updateCar');
 Route::put('update/{id}',[CarController::class,'update'])->name('update');
@@ -69,3 +73,11 @@ Route::get('showCar/{id}',[CarController::class,'show'])->name('showCar');
 Route::get('deleteCar/{id}',[CarController::class,'destroy']);
 Route::get('trashedCar',[PostsController::class,'trashed'])->name('trashedCar');
 Route::get('forceDeleteCar/{id}',[CarsController::class,'destroy'])->name('forceDeleteCar');
+Auth::routes(['verify'=>true]);
+Route::get('home', [HomeController::class, 'index'])->name('home');
+});
+
+// Route::get('home', function(){
+//     return view('home');
+// })->name('home');
+Route::get('test6',[ExampleController::class,'createSession']);

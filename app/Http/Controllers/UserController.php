@@ -17,6 +17,7 @@ class UserController extends Controller
       echo $email = Request::createFromGlobals()->get('email');
       echo "<br/>";
        echo $password = Request::createFromGlobals()->get('password');
+
    }
 
 }

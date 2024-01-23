@@ -16,8 +16,7 @@ class CarController extends Controller
     public function index()
     {
      $cars= Car::get();
-      $category = Category::get();
-        return view('cars', compact('cars', 'category'));
+        return view('cars', compact('cars'));
     //  return view('cars');
     //table
     }
@@ -73,7 +72,7 @@ class CarController extends Controller
     public function show(string $id)
     {
       
-        $cars = Car::findOrFail($id);
+        $car = Car::findOrFail($id);
       return view('showCar',compact('car'));
     }
 
@@ -83,9 +82,9 @@ class CarController extends Controller
 
     public function edit(string $id)
     {
-        $cars = Car::findOrFail($id);
-       $categories = Category::get();
-        return view('updateCar', compact('cars','categories'));
+        $car = Car::findOrFail($id);
+        $categories = Category::get();
+        return view('updateCar', compact('car','categories'));
     }
 
     /**
@@ -109,11 +108,11 @@ class CarController extends Controller
             if($request->hasFile('image')){
              $file_namecar = $this->uploadFile($request->image, 'assets/images');  
              $data['image'] = $file_namecar; 
-             unlink("assets/images/".$request->oldImage);
+             unlink("assets/images/". $request->oldImage);
             }
         $data['published'] = isset($request->published);
         Car::where('id', $id)->update($data);
-        // Category::where('id',$id)->update($data);
+        
         return redirect('cars');
     }
 
